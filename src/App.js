@@ -1,25 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
+import Header from './components/header'
+// import Search from './components/search'
+// import SearchButton from './components/searchButton'
+import Shelff from './components/shelff'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import * as BooksAPI from './BooksAPI'
+
+
+class bookshelf extends Component{
+  state = {
+    showSearchPage: false,
+    books: []
+  };
+updateSearchPageState=state=>{
+  this.setState({ showSearchPage: state})
+};
+componentDidMount(){
+BooksAPI.getAll().then(resp => this.setState({books: resp}))
+console.log("There", BooksAPI.getAll());
 }
+changeBookShelf = (book,shelf)=>{
+  console.log(book, shelf)
+  const books = this.state.books.find(b => b.id === book.id);
+  if (books) {
+    books.shelf = shelf;
+    this.setState(currentState => ({
+      books: currentState.books
+    }));
+  } else {
+      book.shelf = shelf;
+      this.setState(preState => ({
+        books: preState.books.concat(book)
+    }));
+  }
+  BooksAPI.update(book, shelf);
+      }
 
-export default App;
+
+  render(){
+    return(
+      <div className ='app'>
+      {this.state.showSearchPage ? (
+         <div className="search-books">
+         <div className="search-books-bar">
+           <button className="close-search" onClick={() =>this.setState({ showSearchPage: false })}>Close</button>
+           <div className="search-books-input-wrapper">
+            
+             <input type="text" placeholder="Enter a Book Name!"/>
+
+           </div>
+         </div>
+         <div className="search-books-results">
+           <ol className="books-grid"></ol>
+         </div>
+       </div>
+       ):(
+         <div className = " list-books">
+      <Header/>
+      <Shelff allBooks={this.state.books} changeShelf={this.changeBookShelf}/>
+      <div className="open-search">
+            <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+          </div> 
+      </div>
+       )}
+      </div>
+    )
+  }
+}
+export default bookshelf;
