@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
 import Header from './components/header'
-// import Search from './components/search'
-// import SearchButton from './components/searchButton'
 import Shelff from './components/shelff'
 
 import * as BooksAPI from './BooksAPI'
