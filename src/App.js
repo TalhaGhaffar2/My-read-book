@@ -2,22 +2,22 @@ import React, { Component } from 'react'
 import './App.css'
 import Header from './components/header'
 import Shelff from './components/shelff'
-
+import Search from './components/search'
 import * as BooksAPI from './BooksAPI'
+
 
 
 class bookshelf extends Component{
   state = {
-    showSearchPage: false,
-    books: []
+
+    books: [],
   };
-updateSearchPageState=state=>{
-  this.setState({ showSearchPage: state})
-};
+
 componentDidMount(){
 BooksAPI.getAll().then(resp => this.setState({books: resp}))
 console.log("There", BooksAPI.getAll());
 }
+
 changeBookShelf = (book,shelf)=>{
   console.log(book, shelf)
   const books = this.state.books.find(b => b.id === book.id);
@@ -37,31 +37,23 @@ changeBookShelf = (book,shelf)=>{
 
 
   render(){
-    return(
-      <div className ='app'>
-      {this.state.showSearchPage ? (
-         <div className="search-books">
-         <div className="search-books-bar">
-           <button className="close-search" onClick={() =>this.setState({ showSearchPage: false })}>Close</button>
-           <div className="search-books-input-wrapper">
-            
-             <input type="text" placeholder="Enter a Book Name!"/>
-
-           </div>
-         </div>
-         <div className="search-books-results">
-           <ol className="books-grid"></ol>
-         </div>
-       </div>
-       ):(
+    return(   
+    <div className ='app'>
+        
+    {this.state.showSearchPage ? (
+      
+      <Search books ={this.state.books}
+      allBook={this.state.books} changeShelf={this.changeBookShelf}/>
+      
+       ):( 
          <div className = " list-books">
       <Header/>
-      <Shelff allBooks={this.state.books} changeShelf={this.changeBookShelf}/>
+      <Shelff allBook={this.state.books} changeShelf={this.changeBookShelf}/>
       <div className="open-search">
             <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
           </div> 
       </div>
-       )}
+        )} 
       </div>
     )
   }

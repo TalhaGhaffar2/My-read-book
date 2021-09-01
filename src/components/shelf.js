@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 
 class Shelf extends Component {   
 render(){
-    const shelfBooks = this.props.books;
+     const shelfBooks = this.props.books;
     return(
         <div className="list-books-content">
         <div>
