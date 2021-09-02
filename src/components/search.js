@@ -5,56 +5,29 @@ import Shelf from './shelf';
 
 class Search extends Component {
     state = {
-      showSearchPage: false,
         query: "",
-        queriedBooks: []
+        Books: []
       }; 
       queryBooks = query => {
-        if (query) {
-          let queryResults = [];
-
-    
+       
+          let Results = [];
           BooksAPI.search(query).then(results => {
-            if (results && results.length) {
-              queryResults = results.map(result => {
+              Results = results.map(result => {
                 result.shelf = this.addShelf(result);
                 return result;
               });
               this.setState({
-                queriedBooks: queryResults
-              });
-            } else {
-              this.setState({
-                queriedBooks: []
-              });
-            }
+                Books: Results
+              });  
           })
-        }
-        this.setState({
-          query: query.trim()
-        });
-      };
-    
-    
+      };  
   addShelf(result) {
-        let hShelf = this.props.books.find(book => book.id === result.id);
-        return hShelf
+        let Shelf = this.props.books.find(book => book.id === result.id);
+        return Shelf
       }
-
-      handleShowSearchPage= () => {
-        console.log("Call")
-        this.setState({ showSearchPage: false })
-        console.log(this.state.showSearchPage)
-        
-      }
-      
       render() {
         return (
-         
           <div className="search-books">
-        
-           
-           
            <div className="search-books-input-wrapper">  
                 <input
                   onChange={event => this.queryBooks(event.target.value)}
@@ -65,7 +38,7 @@ class Search extends Component {
               </div>
             <div className="search-books-results">
                 <Shelf
-                  books={this.state.queriedBooks}
+                  books={this.state.Books}
                   changeShelf={this.props.changeShelf}
                 />
             </div> 

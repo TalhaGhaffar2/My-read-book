@@ -44,8 +44,7 @@ changeBookShelf = (book,shelf)=>{
     {this.state.showSearchPage ? (
          <div className="search-books-bar">
         <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
-          <Search books ={this.state.books}
-           allBook={this.state.books} changeShelf={this.changeBookShelf}/>  
+          <Search books ={this.state.books} changeShelf={this.changeBookShelf}/>  
      </div>
         ):( 
          <div className = " list-books">
