@@ -5,7 +5,7 @@ import Shelf from './shelf';
 
 class Search extends Component {
     state = {
-        showSearchPage: false,
+      showSearchPage: false,
         query: "",
         queriedBooks: []
       }; 
@@ -40,17 +40,22 @@ class Search extends Component {
         let hShelf = this.props.books.find(book => book.id === result.id);
         return hShelf
       }
-      updateSearchPageState=state=>{
-        this.setState({ showSearchPage: state})
-      };
-    
+
+      handleShowSearchPage= () => {
+        console.log("Call")
+        this.setState({ showSearchPage: false })
+        console.log(this.state.showSearchPage)
+        
+      }
+      
       render() {
         return (
+         
           <div className="search-books">
-            <div className="search-books-bar">
-            <div  className = 'close-search' onClick={() => this.setState({ showSearchPage: false })} >
-           </div>
-              <div className="search-books-input-wrapper">  
+        
+           
+           
+           <div className="search-books-input-wrapper">  
                 <input
                   onChange={event => this.queryBooks(event.target.value)}
                   placeholder="Search by title"
@@ -58,14 +63,14 @@ class Search extends Component {
                 />
     
               </div>
-            </div>
             <div className="search-books-results">
                 <Shelf
                   books={this.state.queriedBooks}
                   changeShelf={this.props.changeShelf}
                 />
-            </div>
-          </div>     
+            </div> 
+          </div>  
+          
         );
       }
     }

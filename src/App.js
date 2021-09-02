@@ -4,12 +4,12 @@ import Header from './components/header'
 import Shelff from './components/shelff'
 import Search from './components/search'
 import * as BooksAPI from './BooksAPI'
-
+ 
 
 
 class bookshelf extends Component{
   state = {
-
+    showSearchPage: false,
     books: [],
   };
 
@@ -38,22 +38,25 @@ changeBookShelf = (book,shelf)=>{
 
   render(){
     return(   
+
     <div className ='app'>
-        
+     
     {this.state.showSearchPage ? (
-      
-      <Search books ={this.state.books}
-      allBook={this.state.books} changeShelf={this.changeBookShelf}/>
-      
-       ):( 
+         <div className="search-books-bar">
+        <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
+          <Search books ={this.state.books}
+           allBook={this.state.books} changeShelf={this.changeBookShelf}/>  
+     </div>
+        ):( 
          <div className = " list-books">
       <Header/>
       <Shelff allBook={this.state.books} changeShelf={this.changeBookShelf}/>
       <div className="open-search">
-            <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
-          </div> 
+           <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+         </div> 
       </div>
         )} 
+        
       </div>
     )
   }
