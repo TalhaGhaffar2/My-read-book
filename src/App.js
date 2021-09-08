@@ -1,63 +1,70 @@
-import React, { Component } from 'react'
+import React,{useState,useEffect} from 'react'
 import './App.css'
 import Header from './components/header'
 import Shelff from './components/shelff'
 import Search from './components/search'
 import * as BooksAPI from './BooksAPI'
+
  
 
 
-class bookshelf extends Component{
-  state = {
-    showSearchPage: false,
-    books: [],
-  };
+function Bookshelf () {
 
-componentDidMount(){
-BooksAPI.getAll().then(resp => this.setState({books: resp}))
-console.log("There", BooksAPI.getAll());
-}
+ const [ showSearchPage, setnewstate] = useState(false);
+ const [books,setbooks ] = useState([]);
 
-changeBookShelf = (book,shelf)=>{
-  console.log(book, shelf)
-  const books = this.state.books.find(b => b.id === book.id);
-  if (books) {
-    books.shelf = shelf;
-    this.setState(currentState => ({
-      books: currentState.books
-    }));
+
+  
+ useEffect(() => {
+  BooksAPI.getAll()
+  .then(data => setbooks(data))
+  console.log("There", BooksAPI.getAll());
+
+  
+},[])
+
+let changeBookShelf = (book, shelf) =>{
+ console.log(book,shelf);
+   const bookss = books.find(b => b.id === book.id);
+   console.log('books',bookss)
+  if (bookss) {
+    bookss.shelf = shelf;
+    setbooks([
+      ...books
+     
+    ]);
   } else {
-      book.shelf = shelf;
-      this.setState(preState => ({
-        books: preState.books.concat(book)
-    }));
+      books.shelf = shelf;
+     setbooks ([
+    ...bookss
+    ]);
   }
-  BooksAPI.update(book, shelf);
+  BooksAPI.update(book, shelf)
+  console.log( BooksAPI.update(book, shelf))
       }
+ 
 
-
-  render(){
     return(   
 
     <div className ='app'>
      
-    {this.state.showSearchPage ? (
+     {showSearchPage ? (
          <div className="search-books-bar">
-        <button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button>
-          <Search books ={this.state.books} changeShelf={this.changeBookShelf}/>  
-     </div>
-        ):( 
+        <button className="close-search" onClick={() => setnewstate({showSearchPage: false})}>Close</button>
+          <Search  books ={books} />  
+     </div> 
+      ):(   
          <div className = " list-books">
       <Header/>
-      <Shelff allBook={this.state.books} changeShelf={this.changeBookShelf}/>
+      <Shelff allBook={books} 
+      changeShelf = {changeBookShelf}
+       />
       <div className="open-search">
-           <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+           <button onClick={() => setnewstate({showSearchPage: true})}>Add a book</button>
          </div> 
-      </div>
-        )} 
-        
+      </div>  
+         )}   
       </div>
     )
-  }
 }
-export default bookshelf;
+export default Bookshelf;

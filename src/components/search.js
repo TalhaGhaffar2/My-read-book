@@ -1,36 +1,35 @@
 
-import React , {Component} from "react"
+import React,{useState}  from "react"
 import * as BooksAPI from '../BooksAPI';
 import Shelf from './shelf';
 
-class Search extends Component {
-    state = {
-        query: "",
-        Books: []
-      }; 
-      queryBooks = query => {
-       
-          let Results = [];
+function Search(props){
+
+  const [Books,setBooks] = useState([])
+
+  
+  let  queryBooks = query => {
+    let Results = [];
           BooksAPI.search(query).then(results => {
               Results = results.map(result => {
-                result.shelf = this.addShelf(result);
+                result.shelf = addShelf(result);
                 return result;
               });
-              this.setState({
-                Books: Results
-              });  
+              setBooks([
+              ...Results
+               ]);  
           })
       };  
-  addShelf(result) {
-        let Shelf = this.props.books.find(book => book.id === result.id);
+      let  addShelf = (result) =>{
+        let Shelf = props.books.find(book => book.id === result.id);
         return Shelf
-      }
-      render() {
+      };
+     
         return (
           <div className="search-books">
            <div className="search-books-input-wrapper">  
                 <input
-                  onChange={event => this.queryBooks(event.target.value)}
+                  onChange={event => queryBooks(event.target.value)}
                   placeholder="Search by title"
                   type="text"
                 />
@@ -38,14 +37,13 @@ class Search extends Component {
               </div>
             <div className="search-books-results">
                 <Shelf
-                  books={this.state.Books}
-                  changeShelf={this.props.changeShelf}
+                  books = {Books}
+                  changeShelf={props.changeShelf}
                 />
             </div> 
           </div>  
           
         );
-      }
     }
       export default Search;
 
