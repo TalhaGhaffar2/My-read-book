@@ -18,9 +18,6 @@ function Bookshelf () {
  useEffect(() => {
   BooksAPI.getAll()
   .then(data => setbooks(data))
-  console.log("There", BooksAPI.getAll());
-
-  
 },[])
 
 let changeBookShelf = (book, shelf) =>{
@@ -30,8 +27,7 @@ let changeBookShelf = (book, shelf) =>{
   if (bookss) {
     bookss.shelf = shelf;
     setbooks([
-      ...books
-     
+      ...books 
     ]);
   } else {
       books.shelf = shelf;
@@ -39,8 +35,7 @@ let changeBookShelf = (book, shelf) =>{
     ...bookss
     ]);
   }
-  BooksAPI.update(book, shelf)
-  console.log( BooksAPI.update(book, shelf))
+  BooksAPI.update(book, shelf);
       }
  
 
