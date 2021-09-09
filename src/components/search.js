@@ -27,6 +27,8 @@ function Search(props){
      
         return (
           <div className="search-books">
+          <div className="search-books-bar">
+          <button className="close-search" onClick={() => props.setnewstate(false)}>Close</button>
            <div className="search-books-input-wrapper">  
                 <input
                   onChange={event => queryBooks(event.target.value)}
@@ -34,6 +36,7 @@ function Search(props){
                   type="text"
                 />
     
+              </div>
               </div>
             <div className="search-books-results">
                 <Shelf

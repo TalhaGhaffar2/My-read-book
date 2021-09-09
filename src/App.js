@@ -44,10 +44,8 @@ let changeBookShelf = (book, shelf) =>{
     <div className ='app'>
      
      {showSearchPage ? (
-         <div className="search-books-bar">
-        <button className="close-search" onClick={() => setnewstate({showSearchPage: false})}>Close</button>
-          <Search  books ={books} />  
-     </div> 
+        
+    <Search  books ={books}  setnewstate = {setnewstate}/>   
       ):(   
          <div className = " list-books">
       <Header/>
