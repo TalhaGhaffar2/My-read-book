@@ -10,6 +10,7 @@ function Search(props){
   
   let  queryBooks = query => {
     let Results = [];
+    console.log(Results);
           BooksAPI.search(query).then(results => {
               Results = results.map(result => {
                 result.shelf = addShelf(result);
@@ -17,7 +18,7 @@ function Search(props){
               });
               setBooks([
               ...Results
-               ]);  
+              ]);  
           })
       };  
       let  addShelf = (result) =>{

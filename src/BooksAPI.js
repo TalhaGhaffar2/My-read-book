@@ -31,28 +31,50 @@ const headers = {
 
 
 
-  export async function update(book,shelf) {
+  // export async function update(book,shelf) {
     
-    const response = await axios.put(`${api}/books/${book.id}`,{
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify(shelf)
-    });
-    const data = await response.data.json()
-    return data;
-  }
-
-
-export async function search(query) {
- 
-  const response = await axios.post(`${api}/search`,{
-   headers: {
-     ...headers,
+  //   const response = await axios.put(`${api}/books/${book.id}`,{
+  //     headers:{
+  //       ...headers,
+  //       'Content-Type':'application/json'
+  //     },
+  //     body:JSON.stringify(shelf)
+  //   });
+  //   const data = await response.data.books.json()
+  //   return data;
+  // }
+  export const  update = async(book, shelf) =>
+  await fetch(`${api}/books/${book.id}`, {
+    method: 'PUT',
+    headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify( query )
-  });
-  let data =  response.data.json();
-  return data
-}
+    body: JSON.stringify({ shelf })
+  }).then(res => res.json())
+
+
+// export async function search(query) {
+ 
+//   let response = await axios.post(`${api}/search`,
+//  {
+  
+//    headers: {
+//      ...headers,
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify( query ) 
+//   });
+//   const data =  response.data.books.json();
+//   return data
+// }
+export const search = async(query) =>
+  await fetch(`${api}/search`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ query })
+  }).then(res => res.json())
+    .then(data => data.books)
+console.log('search',search("fitness"))

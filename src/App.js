@@ -32,7 +32,7 @@ let changeBookShelf = (book, shelf) =>{
   } else {
       books.shelf = shelf;
      setbooks ([
-    ...bookss
+    ...books
     ]);
   }
   BooksAPI.update(book, shelf);
@@ -45,7 +45,7 @@ let changeBookShelf = (book, shelf) =>{
      
      {showSearchPage ? (
         
-    <Search  books ={books}  setnewstate = {setnewstate}/>   
+    <Search  books ={books}  setnewstate = {setnewstate} changeShelf = {changeBookShelf}/>   
       ):(   
          <div className = " list-books">
       <Header/>
@@ -53,7 +53,7 @@ let changeBookShelf = (book, shelf) =>{
       changeShelf = {changeBookShelf}
        />
       <div className="open-search">
-           <button onClick={() => setnewstate({showSearchPage: true})}>Add a book</button>
+           <button onClick={() => setnewstate(true)}>Add a book</button>
          </div> 
       </div>  
          )}   
