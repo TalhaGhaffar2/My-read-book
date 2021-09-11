@@ -30,13 +30,15 @@ let changeBookShelf = (book, shelf) =>{
       ...books 
     ]);
   } else {
-      books.shelf = shelf;
+      book.shelf = shelf;
      setbooks ([
-    ...books
+    ...books.concat(book)
     ]);
   }
   BooksAPI.update(book, shelf);
       }
+
+
  
 
     return(   

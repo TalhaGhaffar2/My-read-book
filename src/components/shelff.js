@@ -5,10 +5,7 @@ import Shelf from "./shelf";
 function Shelff (props) {
 
     const allBook = props.allBook;
-    console.log('here', allBook)
-    console.log('props', props)
     const currentlyReading = allBook.filter(allBook => allBook.shelf === 'currentlyReading')
-    console.log('currently',currentlyReading);
     const wantToRead = allBook.filter(allBook => allBook.shelf === 'wantToRead')
     const read = allBook.filter(allBook => allBook.shelf === 'read')
 

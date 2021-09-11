@@ -22,10 +22,10 @@ function Search(props){
           })
       };  
       let  addShelf = (result) =>{
-        let Shelf = props.books.find(book => book.id === result.id);
+        const Shelf = props.books.find(book => book.id === result.id);
+        console.log(Shelf)
         return Shelf
       };
-     
         return (
           <div className="search-books">
           <div className="search-books-bar">
